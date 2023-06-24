@@ -13,16 +13,12 @@ module.exports.getToDo = async (req, res) => {
 module.exports.createToDo = async (req, res) => {
     try {
         const { text } = req.body;
-
         if (!text) {
             return res.status(400).send('Text field is required');
         }
-
-        const todo = await TodoModel.create({ text });
-
+        const todo = await TodoModel.create({ text, done: false });
         console.log('Added successfully');
         console.info(todo);
-
         res.send(todo);
     } catch (error) {
         console.error(error);
