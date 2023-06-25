@@ -46,6 +46,23 @@ module.exports.updateTodo = async (req, res) => {
     }
 };
 
+module.exports.updateStatus = async (req, res) => {
+    try {
+        const { _id, done } = req.body;
+
+        if (!_id) {
+            return res.status(400).send('Id fields are required');
+        }
+
+        await TodoModel.findByIdAndUpdate(_id, { done:!done });
+
+        res.send('Updated successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
 module.exports.deleteTodo = async (req, res) => {
     try {
         const { _id } = req.body;
